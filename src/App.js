@@ -5,16 +5,48 @@ const App = () => {
   const [step, setStep] = useState(0); // Controla el flujo de renderizado
   const [section, setSection] = useState("home"); // Controla la sección activa
 
+  const projects = [
+    {
+      title: "Sistema Web de Atención Ciudadana",
+      description:
+        "Sistema completo desarrollado desde la planificación hasta el despliegue. Usé React, Flask, PostgreSQL y OpenStreetMaps.",
+      link: "https://github.com/cristoferapr/prototipo-atencion-ciudadana",
+    },
+    {
+      title: "LocalMarket",
+      description:
+        "Aplicación para gestionar inventarios, ventas y base de datos para un minimarket. Usé React, Flask y SQL.",
+      link: "https://github.com/cristoferapr/localmarket-webapp",
+    },
+  ];
+
+  const links = [
+    {
+      name: "GitHub",
+      url: "https://github.com/cristoferapr",
+      icon: "https://img.icons8.com/ios-glyphs/30/ffffff/github.png",
+    },
+    {
+      name: "LinkedIn",
+      url: "https://www.linkedin.com/in/cristoferapr/",
+      icon: "https://img.icons8.com/ios-glyphs/30/ffffff/linkedin.png",
+    },
+    {
+      name: "Correo",
+      url: "mailto:cristoferpizarro.r@gmail.com",
+      icon: "https://img.icons8.com/ios-glyphs/30/ffffff/new-post.png",
+    },
+  ];
+
   useEffect(() => {
-    // Temporizadores para el flujo
     const timers = [];
     timers.push(
-      setTimeout(() => setStep(1), 200), // Aparece el nombre
-      setTimeout(() => setStep(2), 2200), // Aparece el título
-      setTimeout(() => setStep(3), 4200) // Aparecen las opciones de navegación
+      setTimeout(() => setStep(1), 200),
+      setTimeout(() => setStep(2), 2200),
+      setTimeout(() => setStep(3), 4200)
     );
 
-    return () => timers.forEach(clearTimeout); // Limpieza de temporizadores
+    return () => timers.forEach(clearTimeout);
   }, []);
 
   return (
@@ -35,13 +67,14 @@ const App = () => {
                 }}
               />
             )}
-
             {step >= 2 && (
               <Terminal
                 text="Ingeniero Civil Informático"
                 typeSpeed={50}
                 style={{
+                  clear: "both",
                   marginTop: "-50px",
+                  marginBottom: "-40px",
                   fontSize: "1.2rem",
                   color: "#ffffff",
                   fontFamily: "'IBM3270', monospace",
@@ -55,7 +88,7 @@ const App = () => {
 
           {/* Opciones de Navegación */}
           {step >= 3 && (
-            <div className="navigation-options" style={{ paddingBottom: "3%" }}>
+            <div className="navigation-options">
               <Terminal
                 text="[Proyectos]"
                 typeSpeed={50}
@@ -98,11 +131,50 @@ const App = () => {
         {/* Contenido dinámico */}
         <div className="right-column">
           {section === "projects" && (
-            <p className="content">Estos son mis proyectos...</p>
+            <div className="content">
+              <h2>Mis Proyectos</h2>
+              {projects.map((project, index) => (
+                <div key={index} className="project-card">
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Ver en GitHub
+                  </a>
+                </div>
+              ))}
+            </div>
           )}
-          {section === "about" && <p className="content">Acerca de mí...</p>}
+          {section === "about" && (
+            <div className="content" style={{ marginRight: "5px" }}>
+              <h2>Sobre Mí</h2>
+              <p>
+                Apasionado por la ingeniería y la informática, siempre en
+                búsqueda de aprender y explorar nuevas herramientas. Proactivo,
+                con sólidas habilidades interpersonales y capacidad para
+                colaborar eficazmente en equipo.
+              </p>
+            </div>
+          )}
           {section === "contact" && (
-            <p className="content">Ponte en contacto conmigo...</p>
+            <div className="content">
+              <h2>Contacto</h2>
+              <div className="links">
+                {links.map((link, index) => (
+                  <a
+                    key={index}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src={link.icon} alt={link.name} title={link.name} />
+                  </a>
+                ))}
+              </div>
+            </div>
           )}
         </div>
       </div>
@@ -124,12 +196,11 @@ const App = () => {
           height: 90vh;
           width: 90vw;
           border: 1.5px solid;
+          padding: 20px;
           display: flex;
-          flex-direction: row;
         }
 
         .left-column {
-          height: 100%;
           width: 35%;
           display: flex;
           flex-direction: column;
@@ -137,18 +208,15 @@ const App = () => {
           padding: 20px;
         }
 
-        .initial-content {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          align-items: center;
+        .right-column {
+          width: 65%;
+          padding: 20px;
         }
 
         .profile-picture {
           width: 150px;
           height: 150px;
           border-radius: 50%;
-          margin-bottom: 70%;
           background: url('https://avatars.githubusercontent.com/u/102608682?v=4') center/cover;
           animation: pixelate 2s steps(20) forwards;
           filter: grayscale(100%);
@@ -156,34 +224,43 @@ const App = () => {
 
         .navigation-options {
           display: flex;
-          justify-content: space-between;
           flex-direction: column;
           gap: 10px;
-          width: 100%;
         }
 
-        .right-column {
-          width: 65%;
-          padding-left: 5rem;
-          padding-top: 5rem;
+        .content h2 {
+          color: #00ff00;
+          margin-bottom: 10px;
         }
 
-        .content {
-          font-size: 1.5rem;
-          color: #ffffff;
-          font-family: 'IBM3270', monospace;
-          text-align: justify;
-          align-items: center;
+        .project-card {
+          background-color: #282828;
+          padding: 15px;
+          margin-bottom: 10px;
+          border-radius: 5px;
+          transition: transform 0.2s;
         }
 
-        @media (max-width: 768px) {
+        .project-card:hover {
+          transform: scale(1.05);
+        }
+
+        .links img {
+          width: 30px;
+          margin: 10px;
+        }
+          @media (max-width: 768px) {
           .container {
             flex-direction: column;
+            margin: 0;
+            padding: 0;
           }
 
           .left-column {
             width: 100%;
-            padding: 10px;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
             
           }
 
@@ -193,17 +270,25 @@ const App = () => {
 
           .navigation-options {
             display: flex;
-            justify-content: center;
+            justify-content: space-beetwem;
             gap: 20px;
             flex-direction: row;
+            margin: 0;
+            padding: 0;
           }
 
           .right-column {
             width: 100%;
             padding: 10px;
-            margin-top: 20px;
           }
+
+          .project-card {
+            width: 87%}
         }
+            .content{
+            margin-right: '50px'}
+          
+
 
         @keyframes pixelate {
           from {

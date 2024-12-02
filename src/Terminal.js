@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Terminal = ({ text = "", style = {}, typeSpeed = 100, onClick }) => {
+const Terminal = ({ text = "", style = {}, typeSpeed = 150, onClick }) => {
   const [displayedText, setDisplayedText] = useState(""); // Texto mostrado actualmente
   const [index, setIndex] = useState(0); // Índice del texto que se escribe
   const [showCursor, setShowCursor] = useState(true); // Estado para el cursor parpadeante
@@ -20,7 +20,7 @@ const Terminal = ({ text = "", style = {}, typeSpeed = 100, onClick }) => {
   useEffect(() => {
     const cursorInterval = setInterval(() => {
       setShowCursor((prev) => !prev);
-    }, 500); // Parpadea cada 500ms
+    }, 300); // Parpadea cada 500ms
     return () => clearInterval(cursorInterval);
   }, []);
 
@@ -48,7 +48,7 @@ const Terminal = ({ text = "", style = {}, typeSpeed = 100, onClick }) => {
     >
       <p style={{ marginLeft: "20px" }}>
         {displayedText}
-        <span style={{ opacity: showCursor ? 1 : 0 }}>.</span>
+        <span style={{ opacity: showCursor ? 1 : 0 }}></span>
       </p>
     </div>
   );
