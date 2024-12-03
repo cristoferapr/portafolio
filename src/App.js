@@ -225,7 +225,6 @@ const App = () => {
         .navigation-options {
           display: flex;
           flex-direction: column;
-          gap: 10px;
         }
 
         .content h2 {
@@ -258,7 +257,9 @@ const App = () => {
 
           .left-column {
             width: 100%;
-            height: 100vh;
+            height: 75vh;
+            min-height:60%;
+            max-height:75%;
             padding: 0;
             margin: 0;
             
@@ -270,8 +271,6 @@ const App = () => {
 
           .navigation-options {
             display: flex;
-            justify-content: space-beetwem;
-            gap: 20px;
             flex-direction: row;
             margin: 0;
             padding: 0;
@@ -280,6 +279,7 @@ const App = () => {
           .right-column {
             width: 100%;
             padding: 10px;
+            overflow: scroll;
           }
 
           .project-card {
